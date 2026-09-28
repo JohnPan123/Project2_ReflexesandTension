@@ -19,6 +19,8 @@ public class PlayerScript : MonoBehaviour
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        indirection.transform.rotation = Quaternion.identity;
     }
     private void FixedUpdate()
     {
@@ -47,22 +49,29 @@ public class PlayerScript : MonoBehaviour
     private void SightRotation()
     {
         Vector2 rotationInputDeltaValue = sightRotationInput.ReadValue<Vector2>();
+        
         transform.Rotate(Vector3.up * rotationInputDeltaValue.x * cameraRotationSpeed);
-
-        float xAxisRotationCurrent = indirection.transform.rotation.eulerAngles.x;
-        float xAxisRotationPotential = (Vector3.left * rotationInputDeltaValue.y * cameraRotationSpeed).x;
-        float xAxisRotationProspect = xAxisRotationCurrent + xAxisRotationPotential;
+        VerticalRotation(rotationInputDeltaValue.y);
+    }
+    float xAxisRotationCurrent;
+    float xAxisRotationPotential;
+    float xAxisRotationProspect;
+    private void VerticalRotation(float rotationInputDeltaValueY)
+    {
+        xAxisRotationCurrent = indirection.transform.rotation.eulerAngles.x;
+        xAxisRotationPotential = (Vector3.left * rotationInputDeltaValueY * cameraRotationSpeed).x;
+        xAxisRotationProspect = xAxisRotationCurrent + xAxisRotationPotential;
 
         if (xAxisRotationCurrent > 322)
         {
             if ((xAxisRotationProspect) > 322)
-                indirection.transform.Rotate(Vector3.left * rotationInputDeltaValue.y * cameraRotationSpeed);
+                indirection.transform.Rotate(Vector3.left * rotationInputDeltaValueY * cameraRotationSpeed);
         }
 
         else if (xAxisRotationCurrent < 50)
         {
             if ((xAxisRotationProspect) < 50)
-                indirection.transform.Rotate(Vector3.left * rotationInputDeltaValue.y * cameraRotationSpeed);
+                indirection.transform.Rotate(Vector3.left * rotationInputDeltaValueY * cameraRotationSpeed);
         }
 
         Debug.Log(xAxisRotationCurrent);
