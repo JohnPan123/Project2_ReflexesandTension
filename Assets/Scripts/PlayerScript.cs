@@ -34,7 +34,7 @@ public class PlayerScript : MonoBehaviour
         SightRotation();
         BoostTime();
     }
-
+    //---------------------------------------------------MOVEMENT FUNCTIONS-----------------------------------------------\\
     private const float playerSpeed = 10f;
     private void PlayerMovement()
     {
@@ -45,6 +45,9 @@ public class PlayerScript : MonoBehaviour
                                   (transform.right * movementInputFrameValue.x * playerSpeed) + 
                                   (priorVelocityDueToGravity);    
     }
+    //---------------------------------------------------MOVEMENT FUNCTIONS-----------------------------------------------\\
+
+    //---------------------------------------------------ROTATION FUNCTIONS-----------------------------------------------\\
     private const float cameraRotationSpeed = 0.2f;
     private void SightRotation()
     {
@@ -73,11 +76,10 @@ public class PlayerScript : MonoBehaviour
             if ((xAxisRotationProspect) < 50)
                 indirection.transform.Rotate(Vector3.left * rotationInputDeltaValueY * cameraRotationSpeed);
         }
-
-        Debug.Log(xAxisRotationCurrent);
-        Debug.Log(xAxisRotationPotential);
     }
+    //---------------------------------------------------ROTATION FUNCTIONS-----------------------------------------------\\
 
+    //-----------------------------------------------------BOOST FUNCTIONS------------------------------------------------\\
     private bool boostTime = false;
     private const float initialBoostForceMag = 100f;
     private void BoostTime()
@@ -101,4 +103,5 @@ public class PlayerScript : MonoBehaviour
         if (boostForceMag <= 0)
             boostTime = false;
     }
+    //-----------------------------------------------------BOOST FUNCTIONS------------------------------------------------\\
 }
