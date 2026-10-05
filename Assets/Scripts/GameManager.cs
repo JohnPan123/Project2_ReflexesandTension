@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
         spawnTurret = false;
         turretsSpawned = 0;
         turretSpawnTimer = 0f;
-        timeToSpawnTurret = 7f;
+        timeToSpawnTurret = 3f;
 
         listOfTurretTimeSpawns = new float[] {0.3f , 0.5f , 0.8f , 1f , 1.2f , 1.4f , 1.7f};
     }

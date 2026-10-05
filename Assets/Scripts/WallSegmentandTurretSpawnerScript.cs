@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WallSegmentSpawnerScript : MonoBehaviour
+public class WallSegmentandTurretSpawnerScript : MonoBehaviour
 {
     public GameObject wallSegment;
     public GameObject turret;
@@ -8,6 +8,8 @@ public class WallSegmentSpawnerScript : MonoBehaviour
     private const float angularDisplacementIncrement = 360f / 20f;
     private const float radiusOfWall = 13.75f;
     private const float turretDistance = 15f;
+    private const float turretDownwardMagnitude = 5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,6 +29,6 @@ public class WallSegmentSpawnerScript : MonoBehaviour
     private void SpawnTurret()
     {
         transform.Rotate(Vector3.up * (angularDisplacementIncrement * Random.Range(0 , 21)));
-        Instantiate(turret , (transform.position + (transform.forward.normalized * turretDistance)) , transform.rotation);
+        Instantiate(turret , (transform.position + (transform.forward.normalized * turretDistance) - (Vector3.up * turretDownwardMagnitude)), transform.rotation);
     }
 }

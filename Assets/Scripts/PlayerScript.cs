@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerScript : MonoBehaviour
 {
-    public GameObject indirection;
+    [SerializeField] private GameObject indirection;
     private InputAction movementInput;
     private InputAction sightRotationInput;
     private InputAction boostInput;
