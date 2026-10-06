@@ -3,8 +3,10 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static bool spawnTurret;
+
     private static int turretsSpawned;
     private static int turretsTillTension = 20;
+
     private static float turretSpawnTimer;
     private static float timeToSpawnTurret;
     private static float[] listOfTurretTimeSpawns;
