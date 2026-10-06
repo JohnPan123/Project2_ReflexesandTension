@@ -84,7 +84,7 @@ public class PlayerScript : MonoBehaviour
     private const float initialBoostForceMag = 100f;
     private void BoostTime()
     {
-        if (boostInput.triggered)
+        if (boostInput.triggered && !boostTime)
         {
             boostTime = true;
             boostForceMag = initialBoostForceMag;
