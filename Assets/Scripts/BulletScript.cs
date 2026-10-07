@@ -2,24 +2,42 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    private Rigidbody bulletRB;
-
-    private float bulletSpeed = 50f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GameObject laser;
+    private GameObject spawnedLaser;
+    private bool laserDestroyed = false;
+    private void Start()
     {
-        bulletRB = GetComponent<Rigidbody>();
-
-        bulletRB.linearVelocity = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position).normalized * bulletSpeed;
-
-        Debug.Log(Camera.main.GetComponentsInParent<Transform>()[1].gameObject.name);
+        spawnedLaser = Instantiate(laser , transform.position , Quaternion.identity);
+        
     }
+    private void Update()
+    {
+        if (!laserDestroyed)
+            ProjectLaser();
+    }
+    private void ProjectLaser()
+    {
+        Vector3 vectorToPlayer = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position);
 
+        Debug.DrawLine(Camera.main.GetComponentsInParent<Transform>()[1].position , transform.position , Color.green);
+
+        spawnedLaser.transform.forward = vectorToPlayer.normalized;
+        spawnedLaser.transform.localScale = new Vector3(0.25f, 0.25f, vectorToPlayer.magnitude);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+    }
+    //Beneath this, these are used by the animator
+    private float bulletSpeed = 50f;
+    public void LaunchBullet()
+    {
+        gameObject.GetComponent<Rigidbody>().linearVelocity = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position).normalized * bulletSpeed;
+        
+        Destroy(spawnedLaser);
+        laserDestroyed = true;
     }
 }

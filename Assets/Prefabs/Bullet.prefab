@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ff93e9880127a348b2fa33361bd5142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletScript
+  laser: {fileID: 6912666010110522002, guid: 98fad461fb2a37a4ab677007e1f7287b, type: 3}
 --- !u!33 &5493764419803386507
 MeshFilter:
   m_ObjectHideFlags: 0

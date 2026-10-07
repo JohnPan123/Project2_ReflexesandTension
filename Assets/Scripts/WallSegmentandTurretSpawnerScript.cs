@@ -11,14 +11,6 @@ public class WallSegmentandTurretSpawnerScript : MonoBehaviour
     private const float turretDistance = 15f;
     private const float turretDownwardMagnitude = 5f;
 
-    private bool[] turretsSpawned;
-    private void Awake()
-    {
-        turretsSpawned = new bool[20];
-
-        for (int i = 0; i < 20; i++) turretsSpawned[i] = false;
-    }
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -39,16 +31,17 @@ public class WallSegmentandTurretSpawnerScript : MonoBehaviour
     {
         int turretIndexToSpawn = Random.Range(0 , 20);
         
-        while (turretsSpawned[turretIndexToSpawn])
+        while (GameManager.turretsSpawned[turretIndexToSpawn])
         {
             if (++turretIndexToSpawn == 20)
                 turretIndexToSpawn = 0;
         }
 
         transform.Rotate(Vector3.up * (angularDisplacementIncrement * turretIndexToSpawn));
-        Instantiate(turret , (transform.position + (transform.forward.normalized * turretDistance) - (Vector3.up * turretDownwardMagnitude)) , transform.rotation);
+        GameObject turretSpawned = Instantiate(turret , (transform.position + (transform.forward.normalized * turretDistance) - (Vector3.up * turretDownwardMagnitude)) , transform.rotation);
+        turretSpawned.GetComponent<TurretScript>().SetTurretNumber(turretIndexToSpawn);
 
         transform.Rotate(-Vector3.up * (angularDisplacementIncrement * turretIndexToSpawn));
-        turretsSpawned[turretIndexToSpawn] = true;
+        GameManager.turretsSpawned[turretIndexToSpawn] = true;
     }
 }
