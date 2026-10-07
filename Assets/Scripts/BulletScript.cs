@@ -8,7 +8,6 @@ public class BulletScript : MonoBehaviour
     private void Start()
     {
         spawnedLaser = Instantiate(laser , transform.position , Quaternion.identity);
-        
     }
     private void Update()
     {
@@ -19,10 +18,8 @@ public class BulletScript : MonoBehaviour
     {
         Vector3 vectorToPlayer = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position);
 
-        Debug.DrawLine(Camera.main.GetComponentsInParent<Transform>()[1].position , transform.position , Color.green);
-
         spawnedLaser.transform.forward = vectorToPlayer.normalized;
-        spawnedLaser.transform.localScale = new Vector3(0.25f, 0.25f, vectorToPlayer.magnitude);
+        spawnedLaser.transform.localScale = new Vector3(0.25f, 0.25f, vectorToPlayer.magnitude / 2);
     }
     private void OnCollisionEnter(Collision collision)
     {
