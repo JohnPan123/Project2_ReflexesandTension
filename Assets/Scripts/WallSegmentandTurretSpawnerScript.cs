@@ -4,6 +4,7 @@ public class WallSegmentandTurretSpawnerScript : MonoBehaviour
 {
     [SerializeField] private GameObject wallSegment;
     [SerializeField] private GameObject turret;
+    [SerializeField] private GameObject parentOfWalls;
 
     private const float wallSegmentTotalCount = 20f;
     private const float angularDisplacementIncrement = 360f / 20f;
@@ -16,7 +17,8 @@ public class WallSegmentandTurretSpawnerScript : MonoBehaviour
     {
         for (int wallSegmentCount = 0; wallSegmentCount < wallSegmentTotalCount; wallSegmentCount++)
         {
-            Instantiate(wallSegment , (transform.position + (transform.forward.normalized * radiusOfWall)) , transform.rotation);
+            Instantiate(wallSegment , (transform.position + (transform.forward.normalized * radiusOfWall)) , transform.rotation , parentOfWalls.transform);
+            
             transform.Rotate(Vector3.up * (angularDisplacementIncrement));
         }
     }

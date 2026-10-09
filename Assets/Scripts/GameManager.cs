@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     }
     private void DetermineTimeToNextTurret()
     {
-        if (++turretsSpawnedCount == turretsTillTension)
+        if (++turretsSpawnedCount % turretsTillTension == 0)
             timeToSpawnTurret = suspenseTiming;
         else
             timeToSpawnTurret = listOfTurretTimeSpawns[Random.Range(0, 7)];

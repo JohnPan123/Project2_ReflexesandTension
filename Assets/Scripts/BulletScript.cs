@@ -19,7 +19,7 @@ public class BulletScript : MonoBehaviour
         Vector3 vectorToPlayer = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position);
 
         spawnedLaser.transform.forward = vectorToPlayer.normalized;
-        spawnedLaser.transform.localScale = new Vector3(0.25f, 0.25f, vectorToPlayer.magnitude / 2);
+        spawnedLaser.transform.localScale = new Vector3(0.5f, 0.5f, vectorToPlayer.magnitude);
     }
     private void OnCollisionEnter(Collision collision)
     {
