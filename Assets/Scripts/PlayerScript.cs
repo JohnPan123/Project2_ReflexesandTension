@@ -8,7 +8,9 @@ public class PlayerScript : MonoBehaviour
     private InputAction movementInput;
     private InputAction sightRotationInput;
     private InputAction boostInput;
+
     private Rigidbody playerRB;
+    private Renderer playerRDR;
 
     private bool finishedSpawning = false;
 
@@ -20,6 +22,7 @@ public class PlayerScript : MonoBehaviour
         boostInput = InputSystem.actions.FindAction("Boost");
 
         playerRB = GetComponent<Rigidbody>();
+        playerRDR = GetComponent<Renderer>();
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -38,16 +41,19 @@ public class PlayerScript : MonoBehaviour
     {
         if (finishedSpawning)
         {
+            HealthCheck();
             SightRotation();
             BoostTime();
         }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        GameObject objectPlayerCollidedWith = collision.gameObject;
+
+        if (objectPlayerCollidedWith.CompareTag("Bullet"))
         {
             playerHealth -= 5f;
-
+            playerRDR.material.color = new Color(1f - (playerHealth / 100f) , (playerHealth / 100f) , 0 , 1);
         }
     }
     //---------------------------------------------------MOVEMENT FUNCTIONS-----------------------------------------------\\
@@ -135,9 +141,12 @@ public class PlayerScript : MonoBehaviour
     //----------------------------------------------------ANIMATOR FUNCTIONS----------------------------------------------\\
 
     //-----------------------------------------------------HEALTH FUNCTIONS----------------------------------------------\\
-    //private void HealthUpdate()
-    //{
-    //    if (playerHeatlh < )
-    //}
+    private void HealthCheck()
+    {
+        if (playerHealth <= 0)
+        {
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+    }
     //-----------------------------------------------------HEALTH FUNCTIONS----------------------------------------------\\
 }

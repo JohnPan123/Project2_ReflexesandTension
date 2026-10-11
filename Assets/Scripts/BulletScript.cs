@@ -13,8 +13,7 @@ public class BulletScript : MonoBehaviour
     }
     private void Update()
     {
-        if (!laserDestroyed)
-            ProjectLaser();
+        if (!laserDestroyed) ProjectLaser();
     }
     private void ProjectLaser()
     {
@@ -25,19 +24,13 @@ public class BulletScript : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject.layer == floorLayer)
-        {
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject.layer == wallLayer)
-        {
-            Destroy(gameObject);
-        }
+        GameObject objectCollidedWith = collision.gameObject;
+
+        if (objectCollidedWith.CompareTag("Player")) Destroy(gameObject);
+        else if (objectCollidedWith.layer == floorLayer) Destroy(gameObject);
+        else if (objectCollidedWith.layer == wallLayer) Destroy(gameObject);
     }
+
     //Beneath this, these are used by the animator
     private float bulletSpeed = 50f;
     public void LaunchBullet()
