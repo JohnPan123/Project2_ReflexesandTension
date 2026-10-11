@@ -3,6 +3,8 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     [SerializeField] private GameObject laser;
+    private const int floorLayer = 3;
+    private const int wallLayer = 6;
     private GameObject spawnedLaser;
     private bool laserDestroyed = false;
     private void Start()
@@ -19,11 +21,19 @@ public class BulletScript : MonoBehaviour
         Vector3 vectorToPlayer = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position);
 
         spawnedLaser.transform.forward = vectorToPlayer.normalized;
-        spawnedLaser.transform.localScale = new Vector3(0.5f, 0.5f, vectorToPlayer.magnitude);
+        spawnedLaser.transform.localScale = new Vector3(0.5f , 0.5f , vectorToPlayer.magnitude);
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == floorLayer)
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == wallLayer)
         {
             Destroy(gameObject);
         }

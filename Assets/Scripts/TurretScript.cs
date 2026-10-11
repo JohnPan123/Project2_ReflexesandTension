@@ -3,32 +3,43 @@ using UnityEngine;
 public class TurretScript : MonoBehaviour
 {
     [SerializeField] private GameObject bullet;
-
+    private float turretFiringHeight = 2f;
     private int turretNumber;
+
+    private void Update()
+    {
+        if (!LimitReached()) 
+            VerticalIncrementDisplacement();
+    }
+    //---------------------------------------------------TURRET NUMBER FUNCTIONS-----------------------------------------------\\
     public void SetTurretNumber(int number)
     {
         turretNumber = number;
     }
     public int GetTurretNumber() => turretNumber;
+    //---------------------------------------------------TURRET NUMBER FUNCTIONS-----------------------------------------------\\
 
-    //Everything beneath this is for use by the animator.
-    private float verticalIncrement = 0.5f;
+    //----------------------------------------------------TURRET SPAWN FUNCTIONS-----------------------------------------------\\
+    private float verticalIncrement = 3.0f;
     private void VerticalIncrementDisplacement()
     {
-        transform.Translate(Vector3.up * verticalIncrement);
+        transform.Translate(Vector3.up * verticalIncrement * Time.deltaTime);
     }
-    private void VerticalDecrementDisplacement()
+    private bool LimitReached()
     {
-        transform.Translate(-Vector3.up * verticalIncrement);
+        if (transform.position.y >= turretFiringHeight)
+        {
+            TurretSpawnerManager.turretsFinishedSpawning[turretNumber] = true;
+            return true;
+        }
+        return false;
     }
-    private void SpawnBullet()
-    {
-        Instantiate(bullet , gameObject.transform.position + (2f * Vector3.up) , Quaternion.identity);
-    }
+    //---------------------------------------------------TURRET SPAWN FUNCTIONS-----------------------------------------------\\
 
-    public void TurretDespawned()
+    //---------------------------------------------------BULLET SPAWN FUNCTIONS-----------------------------------------------\\
+    public void SpawnBullet()
     {
-        GameManager.turretsSpawned[turretNumber] = false;
-        Destroy(gameObject);
+        Instantiate(bullet, gameObject.transform.position + (3f * Vector3.up), Quaternion.identity);
     }
+    //---------------------------------------------------BULLET SPAWN FUNCTIONS-----------------------------------------------\\
 }
