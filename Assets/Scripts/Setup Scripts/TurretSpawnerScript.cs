@@ -5,17 +5,16 @@ public class TurretSpawnerScript : MonoBehaviour
     [SerializeField] private GameObject turret;
     [SerializeField] private GameObject turretParent;
     private const float angularDisplacementIncrement = 360f / 20f;
-    private const float turretDistance = 15f;
+    private const float turretDistance = 15.5f;
     private const float turretDownwardMagnitude = 5f;
 
     private void Update()
     {
-        if (!TurretSpawnerManager.CheckIfAllSpawned() && TurretSpawnerManager.TimeToSpawnTurret())
+        if (TurretSpawnerManager.CheckIfNeedToSpawnMoreTurrets() && TurretSpawnerManager.TimeToSpawnTurret())
             SpawnTurret();
 
         else if (TurretSpawnerManager.CheckIfAllFinishedSpawning())
         {
-
             turretParent.GetComponent<TurretShooterManager>().enabled = true;
             this.enabled = false;
         }
@@ -38,7 +37,6 @@ public class TurretSpawnerScript : MonoBehaviour
 
         turretSpawned.GetComponent<TurretScript>().SetTurretNumber(turretIndexToSpawn);
         TurretSpawnerManager.turretsSpawned[turretIndexToSpawn] = true;
-
 
         transform.Rotate(-Vector3.up * (angularDisplacementIncrement * turretIndexToSpawn));
     }

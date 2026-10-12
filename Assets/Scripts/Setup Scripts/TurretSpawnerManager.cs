@@ -41,15 +41,15 @@ public class TurretSpawnerManager : MonoBehaviour
     {
         int totalTurretsSpawned = 0;
 
-        foreach (bool turretPlace in turretsFinishedSpawning)
+        foreach (bool turretPresent in turretsFinishedSpawning)
         {
-            if (turretPlace)
+            if (turretPresent)
                 totalTurretsSpawned++;
         }
 
         return (totalTurretsSpawned == turretsFinishedSpawning.Length);
     }
-    public static bool CheckIfAllSpawned()
+    public static bool CheckIfNeedToSpawnMoreTurrets()
     {
         int totalTurretsSpawned = 0;
 
@@ -59,6 +59,6 @@ public class TurretSpawnerManager : MonoBehaviour
                 totalTurretsSpawned++;
         }
 
-        return (totalTurretsSpawned == turretsFinishedSpawning.Length);
+        return (totalTurretsSpawned < turretsSpawned.Length);
     }
 }

@@ -8,8 +8,8 @@ public class TurretScript : MonoBehaviour
 
     private void Update()
     {
-        if (!LimitReached()) 
-            VerticalIncrementDisplacement();
+        if (!LimitReached()) VerticalIncrementDisplacement();
+        else this.enabled = false;
     }
     //---------------------------------------------------TURRET NUMBER FUNCTIONS-----------------------------------------------\\
     public void SetTurretNumber(int number)
@@ -39,7 +39,7 @@ public class TurretScript : MonoBehaviour
     //---------------------------------------------------BULLET SPAWN FUNCTIONS-----------------------------------------------\\
     public void SpawnBullet()
     {
-        Instantiate(bullet, gameObject.transform.position + (3f * Vector3.up), Quaternion.identity);
+        Instantiate(bullet , gameObject.transform.position + (3f * Vector3.up) , Quaternion.identity);
     }
     //---------------------------------------------------BULLET SPAWN FUNCTIONS-----------------------------------------------\\
 }

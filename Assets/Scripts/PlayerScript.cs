@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 public class PlayerScript : MonoBehaviour
 {
     [SerializeField] private GameObject indirection;
+    [SerializeField] private GameObject floor;
+    [SerializeField] private GameObject boostBar;
+    private Animator boostBarAnimator;
     [SerializeField] private LayerMask floorLayer;
     private InputAction movementInput;
     private InputAction sightRotationInput;
@@ -12,8 +15,7 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody playerRB;
     private Renderer playerRDR;
 
-    private bool finishedSpawning = false;
-
+    private static bool finishedSpawning = false;
     private float playerHealth = 100f;
     void Start()
     {
@@ -23,6 +25,7 @@ public class PlayerScript : MonoBehaviour
 
         playerRB = GetComponent<Rigidbody>();
         playerRDR = GetComponent<Renderer>();
+        boostBarAnimator = boostBar.GetComponent<Animator>();
         
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -53,7 +56,7 @@ public class PlayerScript : MonoBehaviour
         if (objectPlayerCollidedWith.CompareTag("Bullet"))
         {
             playerHealth -= 5f;
-            playerRDR.material.color = new Color(1f - (playerHealth / 100f) , (playerHealth / 100f) , 0 , 1);
+            playerRDR.material.color = new Color(1f - (playerHealth / 100f), (playerHealth / 100f), 0, 1);
         }
     }
     //---------------------------------------------------MOVEMENT FUNCTIONS-----------------------------------------------\\
@@ -111,31 +114,30 @@ public class PlayerScript : MonoBehaviour
     private const float initialVelForceMag = 100f;
     private void BoostTime()
     {
-        if (boostInput.triggered && !boostTime)
+        if (boostInput.triggered && boostBarAnimator.GetBool("ReadyToBoost"))
         {
-            boostTime = true;
+            boostBarAnimator.SetBool("PlayerPushedToBoost", true);
             boostVelMag = initialVelForceMag;
         }
     }
     private float boostVelMag;
-    private const float boostForceDep = 20f;
+    private const float boostForceDep = 13f;
     private void PlayerBoost()
     {
-        if (boostTime)
+        if (boostBarAnimator.GetBool("IsBoosting"))
         {
             playerRB.linearVelocity += ((playerRB.linearVelocity - playerRB.linearVelocity.y * Vector3.up).normalized * boostVelMag);
             boostVelMag -= boostForceDep;
         }
-
-        if (boostVelMag == 0)
-            boostTime = false;
     }
     //-----------------------------------------------------BOOST FUNCTIONS------------------------------------------------\\
 
     //----------------------------------------------------ANIMATOR FUNCTIONS----------------------------------------------\\
-    private void FinishedSpawning()
+    private void FinishedSpawningPlayer()
     {
         Destroy(gameObject.GetComponent<Animator>());
+        floor.GetComponent<Animator>().SetBool("GameStart" , true);
+
         finishedSpawning = true;
     }
     //----------------------------------------------------ANIMATOR FUNCTIONS----------------------------------------------\\
