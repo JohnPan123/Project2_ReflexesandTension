@@ -23,7 +23,7 @@ public class TurretShooterManager : MonoBehaviour
         {
             timeElapsedSinceLastBullet += Time.deltaTime;
 
-            if (FloorScript.TopFloorDestroyed())
+            if (GameManager.GetVictoryState())
             {
                 this.enabled = false;
                 return;
@@ -50,7 +50,7 @@ public class TurretShooterManager : MonoBehaviour
         else
         {
             timeToFireNextBullet = tensionTime;
-            bulletsTillTensionTime = (int)(70 * Random.Range(0.5f , 0.8f));
+            bulletsTillTensionTime = (int)(70 * Random.Range(0.55f , 0.8f));
         }
         timeElapsedSinceLastBullet = 0f;
     }

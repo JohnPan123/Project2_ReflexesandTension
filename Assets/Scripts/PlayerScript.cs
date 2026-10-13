@@ -38,7 +38,9 @@ public class PlayerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (finishedSpawning)
+        if (GameManager.GetVictoryState()) ;
+
+        else if (finishedSpawning)
         {
             PlayerMovement();
             PlayerBoost();
@@ -46,12 +48,20 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
-        if (finishedSpawning)
+        if (GameManager.GetVictoryState())
+        {
+            transform.localScale -= new Vector3(0, (0.20f * Time.deltaTime) , 0);
+        }
+            
+
+        else if (finishedSpawning)
         {
             HealthCheck();
             SightRotation();
             BoostTime();
         }
+
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
