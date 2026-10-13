@@ -3,6 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private float gameOverTimer = 3f;
+    void Update()
+    {
+        if (!CheckIfPlayerIsAlive() || GetVictoryState())
+        {
+            gameOverTimer -= Time.deltaTime;
+
+            if (gameOverTimer <= 0)
+                ChangeScene("End Scene");
+        }
+    }
     private static bool victory = false;
 
     /// <summary>

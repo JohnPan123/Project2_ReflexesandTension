@@ -38,7 +38,8 @@ public class PlayerScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GameManager.GetVictoryState()) ;
+        if (GameManager.GetVictoryState()) 
+            playerRB.linearVelocity = 3f * Vector3.up;
 
         else if (finishedSpawning)
         {
@@ -48,11 +49,8 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.GetVictoryState())
-        {
-            transform.localScale -= new Vector3(0, (0.20f * Time.deltaTime) , 0);
-        }
-            
+        if (GameManager.GetVictoryState()) 
+            transform.localScale -= new Vector3(0 , (0.245f * Time.deltaTime) , 0);
 
         else if (finishedSpawning)
         {
@@ -60,8 +58,6 @@ public class PlayerScript : MonoBehaviour
             SightRotation();
             BoostTime();
         }
-
-        
     }
     private void OnCollisionEnter(Collision collision)
     {
