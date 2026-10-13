@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour
     }
     void Update()
     {
-        if (GameManager.GetVictoryState()) 
+        if (GameManager.GetVictoryState())
             transform.localScale -= new Vector3(0 , (0.245f * Time.deltaTime) , 0);
 
         else if (finishedSpawning)
@@ -123,7 +123,7 @@ public class PlayerScript : MonoBehaviour
     private const float initialVelForceMag = 100f;
     private void BoostTime()
     {
-        if (boostInput.triggered && boostBarAnimator.GetBool("ReadyToBoost"))
+        if (boostInput.triggered && boostBarAnimator.GetBool("ReadyToBoost") && playerRB.linearVelocity.magnitude != 0)
         {
             boostBarAnimator.SetBool("PlayerPushedToBoost", true);
             boostVelMag = initialVelForceMag;

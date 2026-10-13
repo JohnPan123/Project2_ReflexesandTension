@@ -3,7 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject player;
     private float gameOverTimer = 3f;
+    private static Color playerVictoryHealth;
     void Update()
     {
         if (!CheckIfPlayerIsAlive() || GetVictoryState())
@@ -11,9 +13,20 @@ public class GameManager : MonoBehaviour
             gameOverTimer -= Time.deltaTime;
 
             if (gameOverTimer <= 0)
+            {
+                if (GetVictoryState())
+                    SetPlayerVictoryHealthColor(player.GetComponent<MeshRenderer>().material.color);
+
                 ChangeScene("End Scene");
+            }
         }
     }
+    private void SetPlayerVictoryHealthColor(Color victoryColor)
+    {
+        playerVictoryHealth = victoryColor;
+    }
+    public static Color GetPlayerVictoryHealthColor() => playerVictoryHealth;
+    //---------------------------------------------------VICTORY AND DEATH STATE STUFF-----------------------------------------------\\
     private static bool victory = false;
 
     /// <summary>
@@ -49,7 +62,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public static bool CheckIfPlayerIsAlive() => !playerDead;
+    //---------------------------------------------------VICTORY AND DEATH STATE STUFF-----------------------------------------------\\
 
+    /// <summary>
+    /// Scene change function. Also called a bunch in buttons.
+    /// </summary>
+    /// <param name="sceneName">This is the scene string name as found in the editor</param>
     public static void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

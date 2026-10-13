@@ -15,6 +15,7 @@ public class GameOverTextScript : MonoBehaviour
         if (GameManager.GetVictoryState()) 
         {
             resultsText.text = "You Won :D";
+            player.GetComponent<MeshRenderer>().material.color = GameManager.GetPlayerVictoryHealthColor();
             player.SetActive(true);
         }
         else 

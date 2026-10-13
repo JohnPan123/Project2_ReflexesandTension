@@ -837,6 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7212c9bfc50a47b40bec73ae707671f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  player: {fileID: 0}
 --- !u!1 &1978805917
 GameObject:
   m_ObjectHideFlags: 0
@@ -975,8 +976,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 15.000427, y: 0}
+  m_SizeDelta: {x: -29.999166, y: -200}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &2106011840
 MonoBehaviour:
@@ -998,12 +999,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " ~Controls~\n - Use the WASD keys for movement.\n - Use the Mouse to control
-    your camera.\n - Use the Right Mouse Button to boost.\n\n ~How To Play~\n - When
-    you spawn in, the turrets that surround you will start firing  \n    bullets
-    at you; if enough bullets hit you, you lose.\n - If you survive long enough,
-    you win!\n - Power Up: The bar on top of your player is your boost bar. It \n   
-    glows when you can boost."
+  m_text: "~Controls~\n- Use the WASD keys for movement.\n- Use the Mouse to control
+    your camera.\n- Use the Right Mouse Button to boost.\n\n~How To Play~\n- When
+    you spawn in, the turrets that surround you will start firing  \nbullets at you;
+    if enough bullets hit you, you lose.\n- If you survive long enough, you win!\n-
+    Boost Power: The bar on top of your player is your boost bar. It glows when you
+    can boost."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

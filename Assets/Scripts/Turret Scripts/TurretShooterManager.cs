@@ -4,8 +4,8 @@ using System.Collections.Generic;
 public class TurretShooterManager : MonoBehaviour
 {
     public static List<GameObject> turretsList;
-    [SerializeField] private AudioSource audio;
-    private int bulletsTillTensionTime = 50;
+    private AudioSource actionSong;
+    private int bulletsTillTensionTime = 70;
     private float tensionTime = 7f;
     private float timeElapsedSinceLastBullet = 0f;
     private float timeToFireNextBullet = 3f;
@@ -14,7 +14,8 @@ public class TurretShooterManager : MonoBehaviour
     {
         turretsList = new List<GameObject>();
         timesToFire = new float[] {0.1f , 0.3f , 0.5f};
-        audio = GetComponent<AudioSource>();
+        actionSong = GetComponent<AudioSource>();
+        actionSong.Play();
 
         this.enabled = false;
     }
@@ -50,15 +51,16 @@ public class TurretShooterManager : MonoBehaviour
         {
             timeToFireNextBullet = timesToFire[Random.Range(0 , (timesToFire.Length - 1))];
 
-            if (!audio.isPlaying) 
-                audio.Play();
+            if (!GetComponent<AudioSource>().isPlaying) 
+                GetComponent<AudioSource>().Play();
         }
 
         else
         {
             timeToFireNextBullet = tensionTime;
             bulletsTillTensionTime = (int)(70 * Random.Range(0.55f , 0.8f));
-            audio.Pause();
+
+            GetComponent<AudioSource>().Pause();
         }
         timeElapsedSinceLastBullet = 0f;
     }
