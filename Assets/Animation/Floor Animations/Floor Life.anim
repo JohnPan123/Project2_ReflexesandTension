@@ -382,7 +382,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 71.55
-    functionName: DestroyFloor
+    functionName: DestroyTopFloor
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

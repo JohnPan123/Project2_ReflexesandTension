@@ -19,18 +19,21 @@ public class TurretShooterManager : MonoBehaviour
 
     void Update()
     {
-        timeElapsedSinceLastBullet += Time.deltaTime;
-
-        if (FloorScript.TopFloorDestroyed())
+        if (GameManager.CheckIfPlayerIsAlive())
         {
-            this.enabled = false;
-            return;
-        }
+            timeElapsedSinceLastBullet += Time.deltaTime;
 
-        else if (timeElapsedSinceLastBullet >= timeToFireNextBullet)
-        {
-            TimeToFire();
-            ResetFiringTime();
+            if (FloorScript.TopFloorDestroyed())
+            {
+                this.enabled = false;
+                return;
+            }
+
+            else if (timeElapsedSinceLastBullet >= timeToFireNextBullet)
+            {
+                TimeToFire();
+                ResetFiringTime();
+            }
         }
     }
 
@@ -47,7 +50,7 @@ public class TurretShooterManager : MonoBehaviour
         else
         {
             timeToFireNextBullet = tensionTime;
-            bulletsTillTensionTime = 50;
+            bulletsTillTensionTime = (int)(70 * Random.Range(0.5f , 0.8f));
         }
         timeElapsedSinceLastBullet = 0f;
     }

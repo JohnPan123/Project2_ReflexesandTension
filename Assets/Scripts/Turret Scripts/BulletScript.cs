@@ -3,17 +3,17 @@ using UnityEngine;
 public class BulletScript : MonoBehaviour
 {
     [SerializeField] private GameObject laser;
+    private GameObject spawnedLaser;
     private const int floorLayer = 3;
     private const int wallLayer = 6;
-    private GameObject spawnedLaser;
-    private bool laserDestroyed = false;
+    private bool laserNotDestroyed = true;
     private void Start()
     {
         spawnedLaser = Instantiate(laser , transform.position , Quaternion.identity);
     }
     private void Update()
     {
-        if (!laserDestroyed) ProjectLaser();
+        if (laserNotDestroyed) ProjectLaser();
     }
     private void ProjectLaser()
     {
@@ -26,18 +26,34 @@ public class BulletScript : MonoBehaviour
     {
         GameObject objectCollidedWith = collision.gameObject;
 
-        if (objectCollidedWith.CompareTag("Player")) Destroy(gameObject);
-        else if (objectCollidedWith.layer == floorLayer) Destroy(gameObject);
-        else if (objectCollidedWith.layer == wallLayer) Destroy(gameObject);
+        if (objectCollidedWith.CompareTag("Player")) DestroyBulletAnim();
+        else if (objectCollidedWith.layer == floorLayer) DestroyBulletAnim();
+        else if (objectCollidedWith.layer == wallLayer) DestroyBulletAnim();
     }
 
     //Beneath this, these are used by the animator
     private float bulletSpeed = 50f;
-    public void LaunchBullet()
+    private void LaunchBullet()
     {
-        gameObject.GetComponent<Rigidbody>().linearVelocity = (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position).normalized * bulletSpeed;
+        gameObject.GetComponent<Rigidbody>().linearVelocity = 
+            (Camera.main.GetComponentsInParent<Transform>()[1].position - transform.position).normalized * bulletSpeed;
         
         Destroy(spawnedLaser);
-        laserDestroyed = true;
+        laserNotDestroyed = false;
+    }
+
+    private void DestroyBulletAnim()
+    {
+        GetComponent<ParticleSystem>().Play();
+        GetComponent<Animator>().SetBool("Destroy Bullet" , true);
+        
+        Destroy(GetComponent<MeshRenderer>());
+        Destroy(GetComponent<MeshFilter>());
+        Destroy(GetComponent<SphereCollider>());
+        //Destroy(GetComponent<Rigidbody>());
+    }
+    private void DestroyBulletObj()
+    {
+        Destroy(gameObject);
     }
 }

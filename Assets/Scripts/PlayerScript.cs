@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private GameObject boostBar;
     private Animator boostBarAnimator;
     [SerializeField] private LayerMask floorLayer;
+    
     private InputAction movementInput;
     private InputAction sightRotationInput;
     private InputAction boostInput;
@@ -15,10 +16,13 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody playerRB;
     private Renderer playerRDR;
 
-    private static bool finishedSpawning = false;
+    private bool finishedSpawning = false;
     private float playerHealth = 100f;
     void Start()
     {
+        GameManager.ResetVictoryState();
+        GameManager.NewGamePlayerAlive();
+
         movementInput = InputSystem.actions.FindAction("Move");
         sightRotationInput = InputSystem.actions.FindAction("Look");
         boostInput = InputSystem.actions.FindAction("Boost");
@@ -110,7 +114,6 @@ public class PlayerScript : MonoBehaviour
     //---------------------------------------------------ROTATION FUNCTIONS-----------------------------------------------\\
 
     //-----------------------------------------------------BOOST FUNCTIONS------------------------------------------------\\
-    private bool boostTime = false;
     private const float initialVelForceMag = 100f;
     private void BoostTime()
     {
@@ -147,8 +150,20 @@ public class PlayerScript : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
-            UnityEditor.EditorApplication.isPlaying = false;
+            if (GameManager.CheckIfPlayerIsAlive()) KillPlayer();
         }
+    }
+
+    private void KillPlayer()
+    {
+        GameManager.KillThePlayer();
+        GetComponent<ParticleSystem>().Play();
+
+        Destroy(GetComponent<MeshFilter>());
+        Destroy(GetComponent<MeshRenderer>());
+        Destroy(GetComponent<CapsuleCollider>());
+        Destroy(GetComponent<Rigidbody>());
+        Destroy(boostBar);
     }
     //-----------------------------------------------------HEALTH FUNCTIONS----------------------------------------------\\
 }
